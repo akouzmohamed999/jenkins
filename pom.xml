@@ -96,7 +96,7 @@
                                         <goal>push</goal>
                                     </goals>
                                     <configuration>
-                                        <serverId>hub-docker.norsys.fr</serverId>
+                                        <serverId>hub.docker.com</serverId>
                                         <imageName>${docker.image.prefix}/${project.artifactId}:latest</imageName>
                                     </configuration>
                                 </execution>
