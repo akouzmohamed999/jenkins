@@ -22,7 +22,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.8</java.version>
 		<docker.spotify.version>0.4.13</docker.spotify.version>
-        	<docker.image.prefix>hub.docker.com/makouz</docker.image.prefix>
+		<docker.image.prefix>docker.io/makouz</docker.image.prefix>
 	</properties>
 
 	<dependencies>
@@ -96,11 +96,25 @@
                                         <goal>push</goal>
                                     </goals>
                                     <configuration>
-                                        <serverId>hub.docker.com</serverId>
                                         <imageName>${docker.image.prefix}/${project.artifactId}:latest</imageName>
+					<serverId>docker-hub</serverId>
                                     </configuration>
                                 </execution>
-                            </executions>
+			</executions>
+			<configuration>
+                                <imageName>${docker.image.prefix}/${project.artifactId}:latest</imageName>
+                                <baseImage>openjdk:8-jdk</baseImage>
+                                <entryPoint>["java","-Djava.security.egd=file:/dev/./urandom","-jar","/${project.build.finalName}.jar"]</entryPoint>
+                                <env>
+                                    <TZ>Europe/Paris</TZ>
+                                </env>
+                                <resources>
+                                    <resource>
+                                        <directory>${project.build.directory}</directory>
+                                        <include>${project.build.finalName}.jar</include>
+                                    </resource>
+                                </resources>
+                         </configuration>
                         </plugin>
                     </plugins>
                 </pluginManagement>
